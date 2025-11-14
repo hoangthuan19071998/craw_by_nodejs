@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Trang của tôi</title>
+</head>
+
+<body>
+    <form action="/getContent" method="POST">
+
+        <div>
+            <label for="url">Nhập link:</label>
+            <input type="text" id="urlInput" name="url" placeholder="Nhập url...">
+        </div>
+
+        <div>
+            <label for="totalPage">Số phân trang:</label>
+            <input type="text" id="totalPageInput" name="totalPage" placeholder="Nhập số phân trang...">
+        </div>
+
+        <div>
+            <label for="linkSelector">Link selector:</label>
+            <input type="text" id="linkSelectorInput" name="linkSelector" placeholder="Nhập link selector...">
+        </div>
+
+        <div>
+            <label for="contentSelector">Content selector:</label>
+            <input type="text" id="contentSelectorInput" name="contentSelector" placeholder="Nhập Content Selector...">
+        </div>
+        <button type="submit">Get Content (Submit)</button>
+    </form>
+</body>
+
+</html>
