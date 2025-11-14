@@ -47,7 +47,7 @@ app.get('/getContent', async (req, res) => {
     }
 
 
-    const doc = new PDFDocument({ margin: 50 });
+    const doc = await new PDFDocument({ margin: 50 });
 
     // Thiết lập Headers cho response để trình duyệt hiểu đây là file PDF
     // 'attachment' sẽ buộc trình duyệt bật hộp thoại "Save As..."
@@ -55,24 +55,24 @@ app.get('/getContent', async (req, res) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="noidung.pdf"');
     try {
-        doc.registerFont('Roboto', './Roboto-Regular.ttf');
+        await doc.registerFont('Roboto', './Roboto-Regular.ttf');
     } catch (error) {
         console.error("Lỗi khi tải font:", error);
         return res.status(500).send("Không thể tải font chữ để tạo PDF.");
     }
     // Pipe (truyền) nội dung PDF trực tiếp vào response (res)
     // Cách này rất hiệu quả vì không cần lưu file tạm trên server
-    doc.pipe(res);
+    await doc.pipe(res);
 
     for (const [index, chapter] of content.entries()) {
+        if (index > 0) doc.addPage();
         console.log(`Đang ghi vào pdf nội dung chương ${index + 1}...`);
-        await doc.font('Roboto').fontSize(25).text(chapter.title, 100, 100, { align: 'left' });
+        await doc.font('Roboto').fontSize(25).text(chapter.title, { align: 'center' });
         doc.moveDown();
         for (const line of chapter.lines) {
-            doc.font('Roboto').fontSize(15).text(line, { align: 'left' });
-            doc.moveDown(0.5);
+            await doc.font('Roboto').fontSize(15).text(line, { align: 'left' });
+            await doc.moveDown(0.5);
         }
     }
-
     doc.end()
 })
