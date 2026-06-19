@@ -22,7 +22,7 @@ function streamPDFToClient(content, errorPages, res) {
     doc.pipe(res);
 
     for (const [index, chapter] of content.entries()) {
-        if ((!chapter.title && !chapter.subTitle) || !chapter.lines || chapter.lines.length < 1) {
+        if (!chapter || (!chapter.title && !chapter.subTitle) || !chapter.lines || chapter.lines.length < 1) {
             errorPages.push({ type: 'no content', chapter: index + 1 });
             continue
         }

@@ -15,7 +15,7 @@ async function fetchAllChapters(baseUrl, totalPages, linkSelector, contentSelect
 
     // Cào nội dung từng link
     for (const [index, link] of allLink.entries()) {
-        if (index < 107) continue
+
         console.log(`Đang lấy nội dung chương ${index + 1}/${allLink.length}`);
 
         try {

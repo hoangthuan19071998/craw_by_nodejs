@@ -52,7 +52,11 @@ app.get('/getContent', async (req, res) => {
 
     } catch (error) {
         console.error("Lỗi nghiêm trọng tại route /getContent:", error);
-        if (!res.headersSent) {
+        if (res.headersSent) {
+            // Chỉ kết thúc response thôi, không send text nữa để tránh lỗi ghi đè
+            res.end();
+        } else {
+            // Nếu chưa pipe dữ liệu, gửi lỗi 500 bình thường
             res.status(500).send("Đã xảy ra lỗi trên Server.");
         }
     }
